@@ -27,7 +27,7 @@ jobs:
           python -m pip install poetry
           poetry install --with dev --sync
 """
-      - name: Rodar testes do Django com cobertura Cov
-        run: poetry run pytest clinica --cov=clinica --cov-fail-under=80
+     """ - name: Rodar testes do Django com cobertura Cov
+        run: poetry run pytest clinica --cov=clinica --cov-fail-under=80"""
 
       
