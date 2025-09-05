@@ -13,6 +13,9 @@ dependencies = [
     "django (>=5.2.6,<6.0.0)"
 ]
 
+# Use Poetry only for dependency management; do not attempt to build/install this project as a package.
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -20,7 +23,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-django = "^5.2 "
+django = "^5.2"
 
 [tool.poetry.group.dev]
 optional = true
@@ -29,6 +32,7 @@ optional = true
 pytest = "^8.4.2"
 pytest-django = "^4.11.1"
 pytest-cov = "^6.2.1"
+coverage = "^7.10.6"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "clinica.settings"
