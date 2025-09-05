@@ -2,3 +2,9 @@ pytest.cov
 pytest clinica/ --cov=clinica    //reporta o resultado dos erros no terminal
 pytest clinica/ --cov=clinica --cov-report html    //cria uma pasta chamado htmlcov com umarquivo index.html
 pytest clinica/ --cov=clinica --cov-fail-under=92    /coloca um limite para erro durante os testes
+
+
+
+toquem de acesso
+
+
