@@ -7,4 +7,3 @@ pytest clinica/ --cov=clinica --cov-fail-under=92    /coloca um limite para erro
 
 toquem de acesso
 
-
