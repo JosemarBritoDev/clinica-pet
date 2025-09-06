@@ -35,6 +35,7 @@ pytest = "^8.4.2"
 pytest-django = "^4.11.1"
 pytest-cov = "^6.2.1"
 coverage = "^7.10.6"
+django-localflavor = "^5.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "clinica.settings"
