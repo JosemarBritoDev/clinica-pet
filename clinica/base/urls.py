@@ -1,10 +1,9 @@
 from django.urls import path
-
-from clinica.base import views
+from clinica.base.views import cliente_views
 
 app_name = 'base'
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', cliente_views.cadastrar_cliente, name='home'),
+    path('cadastrar_cliente/', cliente_views.cadastrar_cliente, name='cadastrar_cliente'),
 ]
-

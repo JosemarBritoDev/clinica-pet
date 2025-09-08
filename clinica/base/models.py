@@ -22,7 +22,7 @@ class BRZipCodeField(models.CharField):
 class EnderecoCliente(models.Model):
     rua = models.CharField(max_length=100, null=False, blank=False)
     numero = models.IntegerField(null=False, blank=False)
-    complemento = models.CharField(max_length=100, null=False, blank=False)
+    complemento = models.CharField(max_length=100, null=False, blank=True)
     bairro = models.CharField(max_length=100, null=False, blank=False)
     cidade = models.CharField(max_length=100, null=False, blank=False)
     estado = models.CharField(max_length=2, null=False, choices=STATE_CHOICES, blank=False)
