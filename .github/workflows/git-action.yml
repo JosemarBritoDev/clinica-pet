@@ -16,8 +16,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: clinica1305
           MYSQL_DATABASE: clinica_pet_db
-          MYSQL_USER: root
-          MYSQL_PASSWORD: clinica1305
         ports:
           - 3306:3306
         options: >-
@@ -25,6 +23,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+    
 
     steps:
       - name: Checkout do código

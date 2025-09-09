@@ -82,11 +82,11 @@ DATABASES = {
         'NAME': 'clinica_pet_db',
         'USER': 'root',
         'PASSWORD': 'clinica1305',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
-
     }
 }
+
 
 
 # Password validation
