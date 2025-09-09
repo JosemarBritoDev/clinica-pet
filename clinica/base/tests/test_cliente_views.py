@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 @pytest.mark.django_db
 def test_cadastrar_cliente_view(client):
-    url = reverse('base:cadastrar_cliente')  # Certifique-se de que esse nome está no seu urls.py
+    url = reverse('base:cadastrar_cliente')
 
     # Dados simulados do formulário
     cliente_data = {
@@ -28,13 +28,14 @@ def test_cadastrar_cliente_view(client):
 
         mock_endereco.return_value = 'endereco_mockado'
 
-        response = client.post(url, data=cliente_data)
+        # segue o redirect automaticamente e cai na listagem
+        response = client.post(url, data=cliente_data, follow=True)
 
         # Verifica se os serviços foram chamados
         mock_endereco.assert_called_once()
         mock_cliente.assert_called_once()
 
-        # Verifica se a resposta foi um render da página (status 200)
+        # Verifica que terminamos na listagem com status 200
         assert response.status_code == 200
-        assert 'form_cliente' in response.context
-        assert 'form_endereco' in response.context
+        # o contexto agora deve trazer 'clientes', não mais os forms
+        assert 'clientes' in response.context

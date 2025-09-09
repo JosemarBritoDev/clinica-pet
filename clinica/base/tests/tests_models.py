@@ -13,7 +13,7 @@ def test_criar_cliente_com_endereco():
         bairro="Centro",
         cidade="São Paulo",
         estado="SP",
-        cep="01000-000",
+        cep="01000-000"
     )
 
     cliente = Cliente.objects.create(
@@ -22,7 +22,7 @@ def test_criar_cliente_com_endereco():
         email="josemar@example.com",
         endereco=endereco,
         telefone="(11)91234-5678",
-        data_nascimento="1990-01-01",
+        data_nascimento="1990-01-01"
     )
 
     assert Cliente.objects.count() == 1
@@ -32,21 +32,12 @@ def test_criar_cliente_com_endereco():
 
 def test_cliente_str(db):
     endereco = EnderecoCliente.objects.create(
-        rua="Rua A",
-        numero=1,
-        complemento="",
-        bairro="B",
-        cidade="C",
-        estado="SP",
-        cep="01000-000",
+        rua="Rua A", numero=1, complemento="", bairro="B", cidade="C", estado="SP",
+        cep="01000-000"
     )
     cliente = Cliente.objects.create(
-        nome="Josemar",
-        cpf="12345678900",
-        email="j@example.com",
-        endereco=endereco,
-        telefone="(11)91234-5678",
-        data_nascimento="1990-01-01",
+        nome="Josemar", cpf="12345678900", email="j@example.com",
+        endereco=endereco, telefone="(11)91234-5678", data_nascimento="1990-01-01"
     )
     assert str(cliente) == "Josemar"
 
@@ -54,33 +45,20 @@ def test_cliente_str(db):
 def test_endereco_cep_invalido(db):
     with pytest.raises(exceptions.ValidationError):
         endereco = EnderecoCliente(
-            rua="Rua A",
-            numero=1,
-            complemento="",
-            bairro="B",
-            cidade="C",
-            estado="SP",
-            cep="1234567",  # CEP inválido
+            rua="Rua A", numero=1, complemento="", bairro="B",
+            cidade="C", estado="SP", cep="1234567"  # CEP inválido
         )
         endereco.full_clean()  # dispara validações do modelo
 
 
 def test_cliente_sem_nome(db):
     endereco = EnderecoCliente.objects.create(
-        rua="Rua A",
-        numero=1,
-        complemento="",
-        bairro="B",
-        cidade="C",
-        estado="SP",
-        cep="01000-000",
+        rua="Rua A", numero=1, complemento="", bairro="B", cidade="C", estado="SP",
+        cep="01000-000"
     )
     cliente = Cliente(
-        cpf="12345678900",
-        email="j@example.com",
-        endereco=endereco,
-        telefone="(11)91234-5678",
-        data_nascimento="1990-01-01",
+        cpf="12345678900", email="j@example.com",
+        endereco=endereco, telefone="(11)91234-5678", data_nascimento="1990-01-01"
     )
     with pytest.raises(exceptions.ValidationError):
         cliente.full_clean()
