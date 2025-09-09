@@ -36,9 +36,19 @@ pytest-django = "^4.11.1"
 pytest-cov = "^6.2.1"
 coverage = "^7.10.6"
 django-localflavor = "^5.0"
+flake8 = "^7.3.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "clinica.settings"
 python_files = ["test*.py", "*_test.py"]
+
+[tool.coverage.run]
+omit = [
+    "*/wsgi.py",
+    "*/asgi.py",
+    "*/migrations/*",
+    "*/__init__.py"
+]
+
 
 

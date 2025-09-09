@@ -1,24 +1,28 @@
-<!doctype html>
-{% extends 'base.html' %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% block title %}
+{# 📄 Template base que herda do AdminLTE #}
+{% extends 'adminlte/base.html' %}
+{% load static %}
 
-        {% endblock %}
-    </title>
-</head>
-<body>
+{# 🎯 Título da aba do navegador #}
+{% block title %}
+Cadastro de Clientes
+{% endblock title %}
+
+{# 🧱 Estrutura principal da página #}
+{% block content %}
 <main class="container">
-    {% block content %}
-
-    {% endblock %}
+    {# 🔧 Aqui será inserido o conteúdo dos templates filhos #}
 </main>
+{% endblock content %}
 
+{# 🧠 Scripts globais disponíveis para todas as páginas #}
 {% block javascript %}
 {{ block.super }}
+
+{# 📦 jQuery: biblioteca base para manipulação DOM #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+{# 🧩 jQuery Mask Plugin: usado para aplicar máscaras em campos de formulário #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+{# 🔧 Scripts adicionais podem ser inseridos nos templates filhos #}
 {% endblock javascript %}
-</body>
-</html>

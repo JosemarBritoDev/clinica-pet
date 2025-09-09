@@ -10,6 +10,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: clinica1305
+          MYSQL_DATABASE: clinica_pet_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -25,16 +40,24 @@ jobs:
         run: |
           set -e
           if git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- .; then
-            echo "Error: Found unresolved merge conflict markers. Resolve them and push again."
+            echo "Erro: Foram encontrados marcadores de conflito não resolvidos."
             exit 1
           fi
 
-      - name: Instalar dependências
+      - name: Instalar dependências com Poetry
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
           poetry lock
           poetry install --with dev
 
-      - name: Rodar testes do Django com cobertura
+      - name: Aplicar migrations
+        run: poetry run python manage.py migrate
+
+      - name: Esperar MySQL subir
+        run: |
+          echo "Aguardando inicialização do MySQL..."
+          sleep 20
+
+      - name: Rodar testes com cobertura
         run: poetry run pytest -q --cov=clinica --cov-fail-under=82

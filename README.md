@@ -78,17 +78,53 @@ A aplicação padrão ficará disponível em http://127.0.0.1:8000/.
   poetry run <comando>
   ```
 
-## Estrutura do projeto (resumo)
+## Estrutura do projeto (atualizada)
 ```
 clinica-pet/
-├── clinica/           # Projeto Django (settings, urls, wsgi, asgi)
-│   └── base/          # App base: views, urls, tests
-├── manage.py          # Utilitário de linha de comando do Django
-├── pyproject.toml     # Configuração de dependências e Pytest
-├── poetry.lock        # Versões travadas das dependências
-├── README.md          # Este arquivo
-└── .github/workflows/ # Pipeline CI (pytest + cobertura)
+├── clinica/                        # Projeto Django
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py                 # Configurações do Django
+│   ├── urls.py                     # Rotas do projeto
+│   ├── wsgi.py
+│   └── base/                       # App base (clientes)
+│       ├── __init__.py
+│       ├── admin.py
+│       ├── apps.py
+│       ├── migrations/
+│       ├── models.py
+│       ├── services/               # Regras de negócio
+│       │   ├── cliente_service.py
+│       │   └── endereco_service.py
+│       ├── entidades/              # Objetos de domínio
+│       │   ├── cliente.py
+│       │   └── endereco.py
+│       ├── forms/
+│       │   ├── cliente_forms.py
+│       │   └── endereco_forms.py
+│       ├── templates/
+│       │   ├── base.html
+│       │   └── clientes/
+│       │       └── form_cliente.html
+│       ├── templatetags/
+│       │   └── meus_filtros.py
+│       ├── urls.py                 # Rotas do app
+│       ├── views/
+│       │   └── cliente_views.py
+│       └── tests.py
+├── manage.py                       # Utilitário de linha de comando do Django
+├── conftest.py                     # Configuração do Pytest
+├── pyproject.toml                  # Dependências e configurações (inclui Pytest)
+├── poetry.lock                     # Versões travadas das dependências
+├── README.md
+├── LICENSE
+└── .github/
+    └── workflows/
+        └── git-action.yml          # Pipeline CI (pytest + cobertura)
 ```
+> Observações:
+> - A pasta htmlcov/ é gerada apenas quando a cobertura é executada e normalmente é ignorada pelo Git.
+> - O banco de dados local (db.sqlite3) é gerado em desenvolvimento e não é necessário em produção.
 
 ## Licença
 Este projeto é distribuído sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
