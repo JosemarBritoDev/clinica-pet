@@ -7,3 +7,46 @@ Iniciar servidor mysql
 sudo systemctl start mysql
 sudo systemctl status mysql
 
+clinica-pet/
+├── clinica/                        ← 🟦 Projeto Django
+│   ├── settings.py                 ← ⚙️ Configurações
+│   ├── urls.py                     ← 🌐 Rotas principais
+│   ├── base/                       ← 🟩 App de clientes
+│   │   ├── models.py               ← 🧬 Modelos Django
+│   │   ├── views/
+│   │   │   └── cliente_views.py    ← 👁️ Views do cliente
+│   │   ├── forms/
+│   │   │   ├── cliente_forms.py    ← 📝 Formulários
+│   │   ├── services/
+│   │   │   ├── cliente_service.py  ← 🧠 Regras de negócio
+│   │   ├── entidades/
+│   │   │   ├── cliente.py          ← 🧱 Objetos de domínio
+│   │   ├── templates/
+│   │   │   └── clientes/
+│   │   │       └── form_cliente.html ← 🎨 Template HTML
+│   │   ├── tests/                  ← 🔬 Pasta de testes (✅ nova!)
+│   │   │   ├── test_models.py          ← Testes de modelos
+│   │   │   ├── test_forms.py           ← Testes de formulários
+│   │   │   ├── test_services.py        ← Testes de serviços
+│   │   │   ├── test_entidades.py       ← Testes de domínio
+│   │   │   ├── test_cliente_views.py   ← Testes de views
+│   │   │   └── __init__.py             ← (opcional, para pacotes)
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── wsgi.py
+├── manage.py                       ← 🛠️ Comando Django
+├── conftest.py                     ← 🧪 Configuração Pytest
+├── pyproject.toml                  ← 📦 Dependências
+├── poetry.lock                     ← 🔒 Versões travadas
+├── README.md                       ← 📘 Documentação
+├── LICENSE                         ← 📄 Licença
+└── .github/
+    └── workflows/
+        └── git-action.yml          ← 🚀 CI com pytest + cobertura
+
+
+        tests.py
+
+        def test_home_status_code(cliente):
+    resposta = cliente.get('/base/cadastrar_cliente/')
+    assert resposta.status_code == 200

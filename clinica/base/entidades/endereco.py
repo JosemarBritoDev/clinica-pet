@@ -8,72 +8,58 @@ class Endereco:
         self.__estado = estado
         self.__cep = cep
 
+    @property
+    def rua(self):
+        return self.__rua
 
-@property
-def rua(self):
-    return self.__rua
+    @rua.setter
+    def rua(self, rua):
+        self.__rua = rua
 
+    @property
+    def numero(self):
+        return self.__numero
 
-@rua.setter
-def rua(self, rua):
-    self.__rua = rua
+    @numero.setter
+    def numero(self, numero):
+        self.__numero = numero
 
+    @property
+    def complemento(self):
+        return self.__complemento
 
-@property
-def numero(self):
-    return self.__numero
+    @complemento.setter
+    def complemento(self, complemento):
+        self.__complemento = complemento
 
+    @property
+    def bairro(self):
+        return self.__bairro
 
-@numero.setter
-def numero(self, numero):
-    self.__numero = numero
+    @bairro.setter
+    def bairro(self, bairro):
+        self.__bairro = bairro
 
+    @property
+    def cidade(self):
+        return self.__cidade
 
-@property
-def complemento(self):
-    return self.__complemento
+    @cidade.setter
+    def cidade(self, cidade):
+        self.__cidade = cidade
 
+    @property
+    def estado(self):
+        return self.__estado
 
-@complemento.setter
-def complemento(self, complemento):
-    self.__complemento = complemento
+    @estado.setter
+    def estado(self, estado):
+        self.__estado = estado
 
+    @property
+    def cep(self):
+        return self.__cep
 
-@property
-def bairro(self):
-    return self.__bairro
-
-
-@bairro.setter
-def bairro(self, bairro):
-    self.__bairro = bairro
-
-
-@property
-def cidade(self):
-    return self.__cidade
-
-
-@cidade.setter
-def cidade(self, cidade):
-    self.__cidade = cidade
-
-
-@property
-def estado(self):
-    return self.__estado
-
-
-@estado.setter
-def estado(self, estado):
-    self.__estado = estado
-
-
-@property
-def cep(self):
-    return self.__cep
-
-
-@cep.setter
-def cep(self, cep):
-    self.__cep = cep
+    @cep.setter
+    def cep(self, cep):
+        self.__cep = cep
