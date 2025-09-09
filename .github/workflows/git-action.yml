@@ -36,5 +36,10 @@ jobs:
           poetry lock
           poetry install --with dev
 
+      # ✅ Novo passo: Rodar Flake8
+      - name: Verificar estilo com Flake8
+        run: |
+          poetry run flake8 clinica --count --max-line-length=88 --statistics
+
       - name: Rodar testes do Django com cobertura
         run: poetry run pytest -q --cov=clinica --cov-fail-under=82
