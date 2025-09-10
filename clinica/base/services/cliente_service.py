@@ -23,3 +23,7 @@ def listar_clientes() -> list[Cliente]:
     Retorna todos os clientes cadastrados no banco.
     """
     return Cliente.objects.all()
+
+
+def listar_cliente_id(id):
+    return Cliente.objects.get(id=id)
