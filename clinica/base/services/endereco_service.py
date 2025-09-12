@@ -6,3 +6,7 @@ def cadastrar_endereco(endereco):
                                           complemento=endereco.complemento,
                                           bairro=endereco.bairro, cidade=endereco.cidade,
                                           estado=endereco.estado, cep=endereco.cep)
+
+
+def listar_endereco_id(id):
+    return EnderecoCliente.objects.get(id=id)
