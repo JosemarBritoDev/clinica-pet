@@ -1,28 +1,22 @@
-{# 📄 Template base que herda do AdminLTE #}
 {% extends 'adminlte/base.html' %}
 {% load static %}
+{% load tz %}
 
-{# 🎯 Título da aba do navegador #}
 {% block title %}
-Cadastro de Clientes
+  Cadastro de Clientes
 {% endblock title %}
 
-{# 🧱 Estrutura principal da página #}
 {% block content %}
-<main class="container">
-    {# 🔧 Aqui será inserido o conteúdo dos templates filhos #}
-</main>
+  <div class="container-fluid">
+    {% block page_content %}{% endblock page_content %}
+  </div>
 {% endblock content %}
 
-{# 🧠 Scripts globais disponíveis para todas as páginas #}
 {% block javascript %}
-{{ block.super }}
+  {{ block.super }}
 
-{# 📦 jQuery: biblioteca base para manipulação DOM #}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-{# 🧩 jQuery Mask Plugin: usado para aplicar máscaras em campos de formulário #}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
-{# 🔧 Scripts adicionais podem ser inseridos nos templates filhos #}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 {% endblock javascript %}
+
+{% block extra_css %}{% endblock extra_css %}
