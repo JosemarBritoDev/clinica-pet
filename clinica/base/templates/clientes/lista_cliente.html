@@ -28,7 +28,7 @@
 
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
-                <b>Email</b> <a class="pull-right">{{cliente.email}}</a>
+                <b>Endereço</b> <a class="pull-right">{{cliente.endereco.rua}}, {{cliente.endereco.numero}}</a>
               </li>
               <li class="list-group-item">
                 <b>CPF</b> <a class="pull-right">
@@ -36,7 +36,7 @@
               </a>
               </li>
               <li class="list-group-item">
-                <b>Nascimento</b> <a class="pull-right">{{cliente.data_nascimento | date:"d/m/Y"}}</a>
+                <b>Nascimento</b> <a class="pull-right">{{cliente.data_nascimento | date:"d/M/Y"}}</a>
               </li>
             </ul>
           </div>
@@ -85,5 +85,6 @@
       </div>
     </div>
   </section>
+
 </div>
 {% endblock content %}
