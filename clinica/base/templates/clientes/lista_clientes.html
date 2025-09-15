@@ -17,6 +17,7 @@ Listagem de Clientes
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>Email</th>
+                    <th>CEP</th>
                     <th>AÇÕES</th>
                 </tr>
             </thead>
@@ -28,9 +29,11 @@ Listagem de Clientes
                     </td>
                     <td>{{ cliente.telefone }}</td>
                     <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.endereco.cep }}</td>
+
                     <td>
-                        <a href="#">Editar</a>
-                        <a href="#">Excluir</a>
+                        <a href="{% url 'base:editar_cliente' cliente.id %}">Editar</a>
+                        <a href="{% url 'base:remover_cliente' cliente.id %}">Excluir</a>
                     </td>
                 </tr>
                 {% endfor %}
