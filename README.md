@@ -1,130 +1,186 @@
-# Clinica Pet
+# Clínica Pet
 
-Sistema para gestão de clínicas veterinárias (Django).
-
-Este repositório está preparado para desenvolvimento local com Poetry, testes com Pytest e integração contínua via GitHub Actions.
+Sistema para gestão de clínicas veterinárias desenvolvido com Django. Este repositório está preparado para desenvolvimento local com Poetry, testes com Pytest e relatório de cobertura.
 
 ## Sumário
 - Visão geral
 - Requisitos
-- Instalação e configuração (passo a passo)
+- Instalação e configuração
+- Banco de dados (MySQL)
 - Executando a aplicação
-- Executando testes e cobertura
-- Comandos úteis com Poetry
-- Estrutura do projeto
+- Testes e cobertura
+- Qualidade de código
+- Comandos úteis (Poetry)
+- Estrutura do projeto (completa)
 - Licença
+
+## Visão geral
+Aplicação web para cadastro e gerenciamento de clientes de uma clínica veterinária. Inclui camadas de entidades, serviços, formulários, views e templates, além de filtros de template customizados.
 
 ## Requisitos
 - Python 3.13+
 - Poetry (gerenciador de dependências)
+- MySQL Server 8+ (para execução com as configurações padrão do projeto)
 
 ## Instalação e configuração
-Após clonar o repositório:
+1) Instale as dependências do projeto (incluindo as de desenvolvimento):
+```bash
+python -m pip install --upgrade pip
+python -m pip install poetry
+poetry install --with dev
+```
 
-1. Instale as dependências (incluindo as de desenvolvimento):
-   ```bash
-   poetry install --with dev
-   ```
+2) (Opcional) Ative o ambiente virtual do Poetry:
+```bash
+poetry shell
+```
+Você também pode usar `poetry run <comando>` sem ativar o shell.
 
-2. (Opcional) Ative o ambiente virtual gerenciado pelo Poetry:
-   ```bash
-   poetry shell
-   ```
-   Você também pode executar qualquer comando prefixando com `poetry run` sem ativar o shell.
+## Banco de dados (MySQL)
+O projeto está configurado para usar MySQL por padrão em `clinica/settings.py`:
+- HOST: 127.0.0.1
+- PORT: 3306
+- NAME: clinica_pet_db
+- USER: root
+- PASSWORD: clinica1305
 
-3. Aplique as migrações do banco de dados:
-   ```bash
-   poetry run python manage.py migrate
-   ```
+Passos recomendados para ambiente local:
+- Instale e inicie o MySQL Server 8+.
+- Crie o banco de dados:
+  ```sql
+  CREATE DATABASE clinica_pet_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  ```
+- Ajuste usuário e senha conforme seu ambiente (se necessário) e atualize `clinica/settings.py`.
+- Certifique-se de ter as bibliotecas de desenvolvimento do MySQL instaladas para compilar/instalar `mysqlclient` (no Linux: libmysqlclient-dev; no macOS: `brew install mysql-client`; no Windows recomenda-se usar WSL).
 
-4. (Opcional) Crie um superusuário para acessar o admin:
-   ```bash
-   poetry run python manage.py createsuperuser
-   ```
+Aplicando migrações e criando superusuário:
+```bash
+poetry run python manage.py migrate
+poetry run python manage.py createsuperuser  # opcional, para acessar /admin
+```
+
+Observação: Existe um arquivo `db.sqlite3` no repositório para fins de desenvolvimento/testes, mas as configurações atuais apontam para MySQL. Se preferir SQLite para um “quick start”, altere temporariamente o bloco DATABASES em `clinica/settings.py` para usar sqlite3.
 
 ## Executando a aplicação
 Inicie o servidor de desenvolvimento:
 ```bash
 poetry run python manage.py runserver
 ```
-A aplicação padrão ficará disponível em http://127.0.0.1:8000/.
+Acesse: http://127.0.0.1:8000/
 
-## Executando testes e cobertura
-- Rodar a suíte de testes:
-  ```bash
-  poetry run pytest -q
-  ```
+## Testes e cobertura
+- Executar a suíte de testes:
+```bash
+poetry run pytest -q
+```
 
-- Rodar testes com cobertura de código do pacote `clinica` e gerar relatório HTML em `htmlcov/`:
-  ```bash
-  poetry run pytest -q --cov=clinica --cov-report=html
-  ```
+- Executar testes com cobertura (gera relatório HTML em `htmlcov/`):
+```bash
+poetry run pytest -q --cov=clinica --cov-report=html
+```
 
-> Observação: o projeto já define `DJANGO_SETTINGS_MODULE=clinica.settings` em `pyproject.toml` para o Pytest.
+Dica: O arquivo `pyproject.toml` já define `DJANGO_SETTINGS_MODULE=clinica.settings` para o Pytest.
 
-## Comandos úteis com Poetry
-- Atualizar o Poetry e instalar dependências do projeto:
-  ```bash
-  python -m pip install --upgrade pip
-  python -m pip install poetry
-  poetry install --with dev
-  ```
-- Regenerar o arquivo de lock (sem atualizar versões):
-  ```bash
-  poetry lock --no-update
-  ```
+## Qualidade de código
+- Rodar Flake8:
+```bash
+poetry run flake8
+```
+
+## Comandos úteis (Poetry)
+- Atualizar o lock sem atualizar versões:
+```bash
+poetry lock --no-update
+```
 - Executar um comando no ambiente virtual sem ativar o shell:
-  ```bash
-  poetry run <comando>
-  ```
+```bash
+poetry run <comando>
+```
 
-## Estrutura do projeto (atualizada)
+## Estrutura do projeto (completa)
+Abaixo está a árvore completa com todas as pastas e arquivos presentes neste repositório:
+
 ```
-clinica-pet/
-├── clinica/                        # Projeto Django
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py                 # Configurações do Django
-│   ├── urls.py                     # Rotas do projeto
-│   ├── wsgi.py
-│   └── base/                       # App base (clientes)
-│       ├── __init__.py
-│       ├── admin.py
-│       ├── apps.py
-│       ├── migrations/
-│       ├── models.py
-│       ├── services/               # Regras de negócio
-│       │   ├── cliente_service.py
-│       │   └── endereco_service.py
-│       ├── entidades/              # Objetos de domínio
-│       │   ├── cliente.py
-│       │   └── endereco.py
-│       ├── forms/
-│       │   ├── cliente_forms.py
-│       │   └── endereco_forms.py
-│       ├── templates/
-│       │   ├── base.html
-│       │   └── clientes/
-│       │       └── form_cliente.html
-│       ├── templatetags/
-│       │   └── meus_filtros.py
-│       ├── urls.py                 # Rotas do app
-│       ├── views/
-│       │   └── cliente_views.py
-│       └── tests.py
-├── manage.py                       # Utilitário de linha de comando do Django
-├── conftest.py                     # Configuração do Pytest
-├── pyproject.toml                  # Dependências e configurações (inclui Pytest)
-├── poetry.lock                     # Versões travadas das dependências
-├── README.md
-├── LICENSE
-└── .github/
-    └── workflows/
-        └── git-action.yml          # Pipeline CI (pytest + cobertura)
+clinica-pet
+├─ LICENSE
+├─ README.md
+├─ anotacoes.txt
+├─ clinica
+│  ├─ __init__.py
+│  ├─ asgi.py
+│  ├─ base
+│  │  ├─ __init__.py
+│  │  ├─ admin.py
+│  │  ├─ apps.py
+│  │  ├─ entidades
+│  │  │  ├─ cliente.py
+│  │  │  └─ endereco.py
+│  │  ├─ forms
+│  │  │  ├─ cliente_forms.py
+│  │  │  └─ endereco_forms.py
+│  │  ├─ migrations
+│  │  │  ├─ 0001_initial.py
+│  │  │  ├─ 0002_alter_cliente_cpf_alter_enderecocliente_cep_and_more.py
+│  │  │  └─ __init__.py
+│  │  ├─ models.py
+│  │  ├─ services
+│  │  │  ├─ cliente_service.py
+│  │  │  └─ endereco_service.py
+│  │  ├─ templates
+│  │  │  ├─ base.html
+│  │  │  └─ clientes
+│  │  │     ├─ confirma_exclusao.html
+│  │  │     ├─ form_cliente.html
+│  │  │     ├─ lista_cliente.html
+│  │  │     └─ lista_clientes.html
+│  │  ├─ templatetags
+│  │  │  └─ meus_filtros.py
+│  │  ├─ tests
+│  │  │  ├─ __init__.py
+│  │  │  ├─ test_cliente_service.py
+│  │  │  ├─ test_cliente_views.py
+│  │  │  ├─ test_entidades.py
+│  │  │  ├─ test_home_views.py
+│  │  │  ├─ test_meus_filtros.py
+│  │  │  └─ tests_models.py
+│  │  ├─ urls.py
+│  │  └─ views
+│  │     └─ cliente_views.py
+│  ├─ settings.py
+│  ├─ urls.py
+│  └─ wsgi.py
+├─ conftest.py
+├─ db.sqlite3
+├─ htmlcov
+│  ├─ class_index.html
+│  ├─ coverage_html_cb_6fb7b396.js
+│  ├─ favicon_32_cb_58284776.png
+│  ├─ function_index.html
+│  ├─ index.html
+│  ├─ keybd_closed_cb_ce680311.png
+│  ├─ status.json
+│  ├─ style_cb_6b508a39.css
+│  ├─ z_93fa48e1be93dc68___init___py.html
+│  ├─ z_93fa48e1be93dc68_asgi_py.html
+│  ├─ z_93fa48e1be93dc68_settings_py.html
+│  ├─ z_93fa48e1be93dc68_urls_py.html
+│  ├─ z_93fa48e1be93dc68_wsgi_py.html
+│  ├─ z_989e13946f0551f7___init___py.html
+│  ├─ z_989e13946f0551f7_admin_py.html
+│  ├─ z_989e13946f0551f7_apps_py.html
+│  ├─ z_989e13946f0551f7_models_py.html
+│  ├─ z_989e13946f0551f7_tests_py.html
+│  ├─ z_989e13946f0551f7_urls_py.html
+│  ├─ z_989e13946f0551f7_views_py.html
+│  ├─ z_c1bf7dc1ede8e3bd___init___py.html
+├─ manage.py
+├─ poetry.lock
+└─ pyproject.toml
 ```
-> Observações:
-> - A pasta htmlcov/ é gerada apenas quando a cobertura é executada e normalmente é ignorada pelo Git.
-> - O banco de dados local (db.sqlite3) é gerado em desenvolvimento e não é necessário em produção.
+
+Notas:
+- A pasta `htmlcov/` e o arquivo `db.sqlite3` são artefatos locais de desenvolvimento.
+- Ajuste as credenciais de banco no `settings.py` para seu ambiente.
 
 ## Licença
 Este projeto é distribuído sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
