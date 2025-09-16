@@ -18,7 +18,7 @@ Sistema para gestão de clínicas veterinárias desenvolvido com Django. Este re
 Aplicação web para cadastro e gerenciamento de clientes de uma clínica veterinária. Inclui camadas de entidades, serviços, formulários, views e templates, além de filtros de template customizados.
 
 ## Requisitos
-- Python 3.13+
+- Python 3.10–3.12 (recomendado 3.11 no WSL)
 - Poetry (gerenciador de dependências)
 - MySQL Server 8+ (para execução com as configurações padrão do projeto)
 
@@ -35,6 +35,27 @@ poetry install --with dev
 poetry shell
 ```
 Você também pode usar `poetry run <comando>` sem ativar o shell.
+
+### Ambiente no WSL (Ubuntu)
+Se você estiver usando WSL (ex.: Ubuntu 22.04):
+1. Instale Python 3.11 (recomendado) e ferramentas:
+   ```bash
+   sudo apt update
+   sudo apt install -y python3.11 python3.11-venv python3.11-distutils build-essential python3-pip
+   ```
+2. Instale o Poetry no WSL e configure o ambiente virtual dentro do projeto (já há um arquivo `poetry.toml` com `in-project = true`):
+   ```bash
+   curl -sSL https://install.python-poetry.org | python3 -
+   exec "$HOME/.local/bin/poetry" --version
+   poetry env use python3.11
+   poetry install --with dev
+   ```
+3. Se precisar do MySQL no WSL para rodar a aplicação com o banco padrão, instale dependências nativas para compilar `mysqlclient`:
+   ```bash
+   sudo apt install -y default-libmysqlclient-dev pkg-config
+   ```
+   Caso não use MySQL durante o desenvolvimento, você pode ajustar temporariamente o `DATABASES` no `clinica/settings.py` para SQLite.
+4. No seu IDE (PyCharm/IntelliJ/VS Code), selecione o interpretador do WSL apontando para `.venv/bin/python` dentro do projeto no WSL.
 
 ## Banco de dados (MySQL)
 O projeto está configurado para usar MySQL por padrão em `clinica/settings.py`:
@@ -79,7 +100,7 @@ poetry run pytest -q
 poetry run pytest -q --cov=clinica --cov-report=html
 ```
 
-Dica: O arquivo `pyproject.toml` já define `DJANGO_SETTINGS_MODULE=clinica.settings` para o Pytest.
+Dica: O arquivo `pytest.ini` define `DJANGO_SETTINGS_MODULE=clinica.settings` e os padrões de descoberta de testes.
 
 ## Qualidade de código
 - Rodar Flake8:

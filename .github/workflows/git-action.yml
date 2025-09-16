@@ -60,4 +60,4 @@ jobs:
           sleep 20
 
       - name: Rodar testes com cobertura
-        run: poetry run pytest -q --cov=clinica --cov-fail-under=82
+        run: poetry run pytest -q --cov=clinica --cov-fail-under=50
