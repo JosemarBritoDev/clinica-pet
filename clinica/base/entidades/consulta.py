@@ -1,9 +1,10 @@
 class ConsultaPet():
-    def __init__(self, pet, motivo_consulta, peso_atual, medicamento_atual, medicamentos_prescritos,
+    def __init__(self, pet, motivo_consulta, peso_atual, avaliacao_medica, medicamento_atual, medicamentos_prescritos,
                  exames_prescritos, data=""):
         self.__pet = pet
         self.__motivo_consulta = motivo_consulta
         self.__peso_atual = peso_atual
+        self.__avaliacao_medica = avaliacao_medica
         self.__medicamento_atual = medicamento_atual
         self.__medicamentos_prescritos = medicamentos_prescritos
         self.__exames_prescritos = exames_prescritos
@@ -32,6 +33,14 @@ class ConsultaPet():
     @peso_atual.setter
     def peso_atual(self, peso_atual):
         self.__peso_atual = peso_atual
+
+    @property
+    def avaliacao_medica(self):
+        return self.__avaliacao_medica
+
+    @avaliacao_medica.setter
+    def avaliacao_medica(self, avaliacao_medica):
+        self.__avaliacao_medica = avaliacao_medica
 
     @property
     def medicamento_atual(self):
