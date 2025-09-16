@@ -67,6 +67,7 @@ class ConsultaPet(models.Model):
     data = models.DateField(null=False, blank=False, auto_now_add=True)
     motivo_consulta = models.CharField(max_length=200, null=False, blank=False)
     peso_atual = models.FloatField(null=False, blank=False)
+    avaliacao_medica = models.TextField(null=False, blank=False)
     medicamento_atual = models.TextField(null=False, blank=True)
     medicamentos_prescritos = models.TextField(null=False, blank=True)
     exames_prescritos = models.TextField(null=False, blank=True)
