@@ -1,5 +1,5 @@
 from django.urls import path
-from clinica.base.views import cliente_views, pet_views, consulta_views
+from clinica.base.views import cliente_views, pet_views, consulta_views, funcionario_views
 
 app_name = 'base'  # Namespace usado nas URLs para reverses como 'base:rota'
 
@@ -32,5 +32,9 @@ urlpatterns = [
     path('cadastrar_consulta/<int:id>', consulta_views.inserir_consulta, name='cadastrar_consulta'),
     # Visualiza uma consulta específica
     path('lista_consulta/<int:id>', consulta_views.listar_consulta_id, name='listar_consulta_id'),
+
+    # Cadastro e consulta de funcionarios
+    path('cadastrar_funcionario', funcionario_views.inserir_funcionario, name='cadastrar_funcionario'),
+    path('listar_funcionarios', funcionario_views.listar_funcionarios, name='listar_funcionarios'),
 
 ]

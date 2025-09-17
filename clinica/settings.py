@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'clinica.base',
-    'localflavor',
     'django_adminlte',
+    'localflavor',
 
 ]
 
