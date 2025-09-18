@@ -1,5 +1,7 @@
 from django.urls import path
-from clinica.base.views import cliente_views, pet_views, consulta_views, funcionario_views
+from clinica.base.views import cliente_views, pet_views, consulta_views, \
+    funcionario_views, autenticacao_views
+
 
 app_name = 'base'  # Namespace usado nas URLs para reverses como 'base:rota'
 
@@ -36,5 +38,8 @@ urlpatterns = [
     # Cadastro e consulta de funcionarios
     path('cadastrar_funcionario', funcionario_views.inserir_funcionario, name='cadastrar_funcionario'),
     path('listar_funcionarios', funcionario_views.listar_funcionarios, name='listar_funcionarios'),
+
+    path('login', autenticacao_views.login_usuario, name='login'),
+    path('logout', autenticacao_views.deslogar_usuario, name='logout'),
 
 ]

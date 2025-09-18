@@ -125,6 +125,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+AUTH_USER_MODEL = 'base.Funcionario'
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
