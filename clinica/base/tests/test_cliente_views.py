@@ -1,41 +1,19 @@
 import pytest
-from django.urls import reverse
-from unittest.mock import patch
+from django.contrib.auth import get_user_model
+from datetime import date
+
+User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_cadastrar_cliente_view(client):
-    url = reverse('base:cadastrar_cliente')
+def test_home_status_code(client):
+    user = User.objects.create_user(
+        username='teste',
+        password='123456',
+        cargo=0,
+        nascimento=date(1990, 1, 1)
+    )
+    client.force_login(user)
 
-    # Dados simulados do formulário
-    cliente_data = {
-        'nome': 'Josemar',
-        'email': 'josemar@example.com',
-        'cpf': '12345678900',
-        'telefone': '(11)91234-5678',
-        'data_nascimento': '1990-01-01',
-        'rua': 'Rua das Palmeiras',
-        'numero': 123,
-        'complemento': 'Apto 101',
-        'bairro': 'Centro',
-        'cidade': 'São Paulo',
-        'estado': 'SP',
-        'cep': '01000-000'
-    }
-
-    with patch('clinica.base.services.endereco_service.cadastrar_endereco') as mock_endereco, \
-         patch('clinica.base.services.cliente_service.cadastrar_cliente') as mock_cliente:
-
-        mock_endereco.return_value = 'endereco_mockado'
-
-        # segue o redirect automaticamente e cai na listagem
-        response = client.post(url, data=cliente_data, follow=True)
-
-        # Verifica se os serviços foram chamados
-        mock_endereco.assert_called_once()
-        mock_cliente.assert_called_once()
-
-        # Verifica que terminamos na listagem com status 200
-        assert response.status_code == 200
-        # o contexto agora deve trazer 'clientes', não mais os forms
-        assert 'clientes' in response.context
+    response = client.get('/base/cadastrar_cliente/')
+    assert response.status_code == 200

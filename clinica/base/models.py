@@ -76,9 +76,10 @@ class ConsultaPet(models.Model):
 
 class Funcionario(AbstractUser):
     CARGO_CHOICES = [
+        (0, 'Administrador'),
         (1, 'Veterinario'),
-        (2, 'Financeiro'),
-        (3, 'Atendimento'),
+        (2, 'Recepcionista'),
+        (3, 'Auxiliar'),
     ]
     nome = models.CharField(max_length=50, null=False, blank=False)
     nascimento = models.DateField(null=False, blank=False)

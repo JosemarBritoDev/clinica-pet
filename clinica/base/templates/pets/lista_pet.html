@@ -1,93 +1,118 @@
 {% extends "base.html" %}
+{% load meus_filtros %}
 {# Página de perfil do pet com histórico de consultas #}
+
 {% block title %}
 Listagem de Pet
 {% endblock title %}
 
-{# Conteúdo do perfil do pet e sua timeline de consultas #}
 {% block content %}
 <section class="content">
+  <div class="row">
 
-    <div class="row">
-        <div class="col-md-3">
+    <!-- Perfil do Pet -->
+    <div class="col-md-3">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <h3 class="profile-username text-center">{{ pet.nome }}</h3>
+          <p class="text-muted text-center">{{ pet.get_categoria_display }}</p>
 
-            <!-- Profile Image -->
-            <div class="box box-primary">
-                <div class="box-body box-profile">
-                    <h3 class="profile-username text-center">{{pet.nome}}</h3>
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Nascimento</b> <a class="pull-right">{{ pet.nascimento|date:"d/m/Y" }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Cor</b> <a class="pull-right">{{ pet.get_cor_display }}</a>
+            </li>
+          </ul>
 
-                    <p class="text-muted text-center">{{pet.get_categoria_display}}</p>
-
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>Nascimento</b> <a class="pull-right">{{pet.nascimento}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Cor</b> <a class="pull-right">{{pet.get_cor_display}}</a>
-                        </li>
-                    </ul>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="{% url 'base:cadastrar_consulta' pet.id %}" class="btn btn-primary btn-block">
-                                Cadastrar Consulta
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.box-body -->
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <a href="{% url 'base:cadastrar_consulta' pet.id %}" class="btn btn-primary btn-block">
+                Cadastrar Consulta
+              </a>
             </div>
-            <!-- /.box -->
-
-            <!-- About Me Box -->
+          </div>
         </div>
-        <div class="col-md-9">
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#timeline" data-toggle="tab">Histórico</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="active tab-pane" id="timeline">
-                        <ul class="timeline timeline-inverse">
-                            <li class="time-label">
-                        <span class="bg-red">
-                          {% now "SHORT_DATE_FORMAT" %}
-                        </span>
-                            </li>
-
-                            {% for consulta in consultas %}
-                            <li>
-                                <i class="fa fa-paw bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"> <i class="fa fa-calendar"></i>
-                                        {{consulta.data}}
-                                    </span>
-                                    <h3 class="timeline-header">
-                                        {{consulta.pet.nome}} realizou nova consulta
-                                    </h3>
-                                    <div class="timeline-body">
-                                        Esta consulta foi: {{consulta.motivo_consulta}}
-                                    </div>
-                                    <div class="timeline-footer">
-                                      <a class="btn btn-primary btn-xs" href="{% url 'base:listar_consulta_id' consulta.id %}">
-                                        Visualizar Consulta
-                                      </a>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-
-                            <!-- END timeline item -->
-
-                            <li>
-                                <i class="fa fa-clock-o bg-gray"></i>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <!-- Histórico de Consultas -->
+    <div class="col-md-9">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#timeline" data-toggle="tab">Histórico</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane" id="timeline">
+            <ul class="timeline timeline-inverse">
+
+              {# Data atual no topo da timeline #}
+              <li class="time-label">
+                <span class="bg-green" id="dataAtual">Carregando...</span>
+              </li>
+
+              {# Loop das consultas em ordem decrescente (mais recente primeiro) #}
+              {% for consulta in consultas %}
+              <li>
+                <i class="fa fa-paw bg-blue"></i>
+                <div class="timeline-item">
+                  <span class="time">
+                    <i class="fa fa-calendar"></i> {{ consulta.data|date:"d/m/Y" }}
+                  </span>
+                  <h3 class="timeline-header">
+                    {{ consulta.pet.nome }} realizou nova consulta
+                  </h3>
+                  <div class="timeline-body">
+                    Esta consulta foi: {{ consulta.motivo_consulta }}
+                  </div>
+                  <div class="timeline-footer">
+                    <a class="btn btn-primary btn-xs" href="{% url 'base:listar_consulta_id' consulta.id %}">
+                      Visualizar Consulta
+                    </a>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+
+              {# Data da primeira consulta no final da timeline #}
+              {% if consultas %}
+                {% with primeira=consultas|slice:"-1:" %}
+                  <li class="time-label">
+                    <span class="bg-red">
+                      {{ primeira.0.data|date:"d/m/Y" }}
+                    </span>
+                  </li>
+                {% endwith %}
+              {% endif %}
+
+              <li><i class="fa fa-clock-o bg-gray"></i></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
+<!-- Script para exibir a data atual no formato "dd/mm/yyyy" -->
+<script>
+  function formatarDataNumerica(data) {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  function atualizarData() {
+    const hoje = new Date();
+    const formatado = formatarDataNumerica(hoje);
+    document.getElementById('dataAtual').textContent = formatado;
+  }
+
+  atualizarData(); // chama ao carregar
+</script>
 {% endblock content %}
