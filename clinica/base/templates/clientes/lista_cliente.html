@@ -7,15 +7,13 @@ listagem de Cliente
 {% endblock title %}
 
 {% block page_content %}
-<div class="content-wrapper" style="min-height: 1136.28px; width: 100%; margin-left: 0; margin-top: 0; padding-left: 10px; padding-top: 10px;">
-  <!-- Wrapper geral do conteúdo -->
-
+<div class="container-fluid">
   <!-- Main content -->
   <section class="content">
     <div class="row">
 
       <!-- Perfil do cliente -->
-      <div class="col-xs-12 col-sm-4 col-md-3">
+      <div class="col-12 col-md-4 col-lg-3 mb-3">
         <div class="box box-primary">
           <div class="box-body box-profile">
             <h3 class="profile-username text-center">{{ cliente.nome }}</h3>
@@ -23,13 +21,13 @@ listagem de Cliente
 
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
-                <b>Endereço</b> <a class="pull-right">{{ cliente.endereco.rua }}, {{ cliente.endereco.numero }}</a>
+                <b>Endereço</b> <span class="float-right">{{ cliente.endereco.rua }}, {{ cliente.endereco.numero }}</span>
               </li>
               <li class="list-group-item">
-                <b>CPF</b> <a class="pull-right">{{ cliente.cpf|format_cpf }}</a>
+                <b>CPF</b> <span class="float-right">{{ cliente.cpf|format_cpf }}</span>
               </li>
               <li class="list-group-item">
-                <b>Nascimento</b> <a class="pull-right">{{ cliente.data_nascimento|date:"d/m/Y" }}</a>
+                <b>Nascimento</b> <span class="float-right">{{ cliente.data_nascimento|date:"d/m/Y" }}</span>
               </li>
             </ul>
           </div>
@@ -52,10 +50,10 @@ listagem de Cliente
             {% endfor %}
 
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-lg-12">
                 <a href="{% url 'base:cadastrar_pet' cliente.id %}" class="btn btn-primary btn-block">Cadastrar Pet</a>
-                <br>
-                <button type="button" class="btn btn-primary btn-block" onclick="window.history.back();">Voltar</button>
+                  <button type="button" class="btn btn-primary btn-block" onclick="window.history.back();">Voltar</button>
+
               </div>
             </div>
           </div>
@@ -63,7 +61,7 @@ listagem de Cliente
       </div>
 
       <!-- Histórico de Consultas -->
-      <div class="col-md-9">
+      <div class="col-12 col-md-8 col-lg-9">
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#timeline" data-toggle="tab">Histórico</a></li>
@@ -72,12 +70,12 @@ listagem de Cliente
             <div class="active tab-pane" id="timeline">
               <ul class="timeline timeline-inverse">
 
-                {# Data atual no topo da timeline #}
+                <!-- Data atual no topo da timeline -->
                 <li class="time-label">
                   <span class="bg-green" id="dataAtual">Carregando...</span>
                 </li>
 
-                {# Loop das consultas em ordem decrescente (mais recente primeiro) #}
+                <!-- Loop das consultas -->
                 {% for consulta in consultas %}
                 <li>
                   <i class="fa fa-paw bg-blue"></i>
@@ -100,7 +98,7 @@ listagem de Cliente
                 </li>
                 {% endfor %}
 
-                {# Data da primeira consulta no final da timeline #}
+                <!-- Data da primeira consulta -->
                 {% if consultas %}
                   {% with primeira=consultas|slice:"-1:" %}
                     <li class="time-label">
@@ -138,6 +136,6 @@ listagem de Cliente
     document.getElementById('dataAtual').textContent = formatado;
   }
 
-  atualizarData(); // chama ao carregar
+  atualizarData();
 </script>
 {% endblock page_content %}

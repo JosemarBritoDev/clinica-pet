@@ -38,8 +38,13 @@ urlpatterns = [
     # Cadastro e consulta de funcionarios
     path('cadastrar_funcionario', funcionario_views.inserir_funcionario, name='cadastrar_funcionario'),
     path('listar_funcionarios', funcionario_views.listar_funcionarios, name='listar_funcionarios'),
+    path('editar_funcionario/<int:id>', funcionario_views.editar_funcionario, name='editar_funcionario'),
 
+
+    # Cadastro de Autenticação de usuário
     path('login', autenticacao_views.login_usuario, name='login'),
     path('logout', autenticacao_views.deslogar_usuario, name='logout'),
+    # Cadastro de envio de email
+    path('enviar_consulta/<int:id>', consulta_views.enviar_consulta_email, name='enviar_consulta'),
 
 ]

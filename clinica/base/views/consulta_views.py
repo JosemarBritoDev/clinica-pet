@@ -1,4 +1,10 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.conf import settings
+
 from clinica.base.decorators import cargo_requerido
 from ..forms import consulta_forms
 from ..services import pet_service, consulta_service
@@ -18,6 +24,7 @@ def inserir_consulta(request, id):
             medicamento_atual = form_consulta.cleaned_data["medicamento_atual"]
             medicamentos_prescritos = form_consulta.cleaned_data["medicamentos_prescritos"]
             exames_prescritos = form_consulta.cleaned_data["exames_prescritos"]
+
             consulta_nova = consulta.ConsultaPet(
                 pet=pet,
                 motivo_consulta=motivo_consulta,
@@ -39,3 +46,37 @@ def inserir_consulta(request, id):
 def listar_consulta_id(request, id):
     consulta = consulta_service.listar_consulta(id)
     return render(request, 'consultas/lista_consulta.html', {'consulta': consulta})
+
+
+# 🔒 Envio de email da consulta
+@login_required
+def enviar_consulta_email(request, id):
+    consulta = consulta_service.listar_consulta(id)
+    pet_consulta = pet_service.listar_pet_id(consulta.pet.id)
+
+    assunto = f"Detalhes da Consulta do seu Pet {pet_consulta.nome}"
+    corpo_email = "Resumo da consulta do seu pet."
+    email_remetente = settings.EMAIL_HOST_USER
+    email_destino = [pet_consulta.dono.email]
+
+    html_conteudo = render_to_string(
+        'consultas/consulta_email.html',
+        {'consulta': consulta},
+        request=request
+    )
+
+    try:
+        send_mail(
+            subject=assunto,
+            message=corpo_email,
+            from_email=email_remetente,
+            recipient_list=email_destino,
+            html_message=html_conteudo
+        )
+        messages.success(request, "Email enviado com sucesso!")
+    except BadHeaderError:
+        messages.error(request, "Erro ao enviar email. Cabeçalho inválido.")
+    except Exception as e:
+        messages.error(request, f"Erro ao enviar email: {str(e)}")
+
+    return redirect('base:listar_consulta_id', id)
