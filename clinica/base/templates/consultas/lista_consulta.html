@@ -1,57 +1,64 @@
 {% extends "base.html" %}
 {% load meus_filtros %}
-{# Template de impressão/visualização de uma consulta específica #}
+
 {% block title %}
 Listagem de Consulta
 {% endblock title %}
 
-{# Conteúdo principal exibindo os dados da consulta e do pet #}
 {% block content %}
-<section class="invoice">
+<div class="container-fluid px-3 py-3">
+  <section class="invoice">
     <div class="row">
-        <div class="col-xs-12">
-            <h2 class="page-header">
-                <i class="fa fa-globe"></i> Consulta.
-                <small class="pull-right">Data: {{consulta.data}}</small>
-            </h2>
-        </div>
+      <div class="col-12">
+        <h2 class="page-header d-flex justify-content-between align-items-center">
+          <span><i class="fa fa-globe"></i> Consulta</span>
+          <small>Data: {{ consulta.data }}</small>
+        </h2>
+      </div>
     </div>
-    <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-            <b>Consulta</b>
-            <br>
-            <b>Data:</b> {{consulta.data}} <br>
-            <b>Motivo: </b> {{consulta.motivo_consulta}} <br>
-        </div>
-        <div class="col-sm-4 invoice-col">
-            <b>Pet</b>
-            <br>
-            <b>Nome: </b> {{consulta.pet.nome}} <br>
-            <b>Nascimento: </b> {{consulta.pet.nascimento}} <br>
-        </div>
+
+    <div class="row invoice-info mb-3">
+      <div class="col-12 col-md-6 mb-3">
+        <h5><strong>Consulta</strong></h5>
+        <p>
+          <strong>Data:</strong> {{ consulta.data }}<br>
+          <strong>Motivo:</strong> {{ consulta.motivo_consulta }}
+        </p>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <h5><strong>Pet</strong></h5>
+        <p>
+          <strong>Nome:</strong> {{ consulta.pet.nome }}<br>
+          <strong>Nascimento:</strong> {{ consulta.pet.nascimento }}
+        </p>
+      </div>
     </div>
+
     <hr>
-    <div class="row">
-        <div class="col-sm-12">
-            <b>Dados da Consulta</b>
-            <br>
-            <b>Data:</b> {{consulta.data}} <br>
-            <b>Motivo: </b> {{consulta.motivo_consulta}} <br>
-            <b>Peso atual: </b> {{consulta.peso_atual}} <br>
-            <b>Avaliação Médica: </b> {{consulta.avaliacao_medica}} <br>
-            <b>Medicamentos Prescritos: </b> {{consulta.medicamentos_prescritos}} <br>
-            <b>Exames Prescritos: </b> {{consulta.exames_prescritos}} <br>
-        </div>
+
+    <div class="row mb-4">
+      <div class="col-12">
+        <h5><strong>Dados da Consulta</strong></h5>
+        <p>
+          <strong>Data:</strong> {{ consulta.data }}<br>
+          <strong>Motivo:</strong> {{ consulta.motivo_consulta }}<br>
+          <strong>Peso atual:</strong> {{ consulta.peso_atual }}<br>
+          <strong>Avaliação Médica:</strong> {{ consulta.avaliacao_medica }}<br>
+          <strong>Medicamentos Prescritos:</strong> {{ consulta.medicamentos_prescritos }}<br>
+          <strong>Exames Prescritos:</strong> {{ consulta.exames_prescritos }}
+        </p>
+      </div>
     </div>
 
     <div class="row no-print">
-        <div class="col-xs-12">
-            <button type="button" class="btn btn-primary pull-right" onclick="window.print();">
-                <i class="fa fa-print"> Imprimir</i>
-            </button>
-        </div>
+      <div class="col-12 text-end">
+        <a href="{% url 'base:enviar_consulta' consulta.id %}" class="btn btn-success me-2">
+          <i class="fa fa-paper-plane"></i> Enviar Email</a>
+        <button type="button" class="btn btn-primary" onclick="window.print();">
+          <i class="fa fa-print"></i> Imprimir</button>
+           <button type="button" class="btn btn-primary" onclick="window.history.back();">Voltar</button>
+      </div>
     </div>
-
-</section>
-
+  </section>
+</div>
 {% endblock content %}
